@@ -2,8 +2,8 @@ name: via
 
 on:
   schedule:
-    # Run every 3 hours (at minute 0)
-    - cron: "0 */3 * * *"
+    # Run every hour (at minute 0)
+    - cron: "0 * * * *"
   workflow_dispatch:
 
 # Single concurrency group for the whole workflow (repo-level):
@@ -37,17 +37,17 @@ jobs:
       - name: Download
         shell: bash
         run: |
-          curl -fsSL -o via.zip "${{ secrets.VIA }}"
-          if [ ! -f "via.zip" ]; then
-            echo "Download failed: via.zip not found."
+          curl -fsSL -o via_1h.zip "${{ secrets.VIA }}"
+          if [ ! -f "via_1h.zip" ]; then
+            echo "Download failed: via_1h.zip not found."
             exit 1
           fi
 
       - name: Unzip
         shell: bash
         run: |
-          unzip -q via.zip
-          rm -f via.zip
+          unzip -q via_1h.zip
+          rm -f via_1h.zip
 
       - name: Make runner executable
         shell: bash
